@@ -1,0 +1,62 @@
+{% extends "_appshell.html" %}
+{% block title %}Dashboard — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Dashboard</h1>
+  <p>Overview of detection activity and model status.</p>
+</div>
+
+<div id="dash-alert"></div>
+
+<div class="grid grid-4" style="margin-bottom:22px;">
+  <div class="stat-card"><div class="stat-label">Total Scans</div><div class="stat-value accent" id="stat-total">–</div></div>
+  <div class="stat-card"><div class="stat-label">Phishing Detected</div><div class="stat-value danger" id="stat-phishing">–</div></div>
+  <div class="stat-card"><div class="stat-label">Suspicious URLs</div><div class="stat-value warn" id="stat-suspicious">–</div></div>
+  <div class="stat-card"><div class="stat-label">Legitimate URLs</div><div class="stat-value safe" id="stat-legit">–</div></div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:22px;">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Detection Distribution</span></div>
+    <canvas id="chart-distribution" height="220"></canvas>
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Scan Activity (Last 14 Days)</span></div>
+    <canvas id="chart-activity" height="220"></canvas>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Recent Scans</span>
+    <a href="/history" class="btn btn-outline" style="padding:7px 14px; font-size:12.5px;">View All</a>
+  </div>
+  <table>
+    <thead><tr><th>URL</th><th>Prediction</th><th>Risk Score</th><th>Model</th><th>Time</th></tr></thead>
+    <tbody id="recent-scans-body"><tr><td colspan="5" style="color:var(--text-faint);">Loading…</td></tr></tbody>
+  </table>
+</div>
+
+<!-- NEW: Email & Message statistics (additive; existing Website/URL cards and chart above are untouched) -->
+<div class="page-header" style="margin-top:34px;">
+  <h1 style="font-size:19px;">Email &amp; Message Detection</h1>
+  <p>Separate statistics for the new Email and Message scanners.</p>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:14px;">
+  <div class="stat-card"><div class="stat-label">Emails Analyzed</div><div class="stat-value accent" id="stat-emails-total">–</div></div>
+  <div class="stat-card"><div class="stat-label">Phishing Emails</div><div class="stat-value danger" id="stat-emails-phishing">–</div></div>
+  <div class="stat-card"><div class="stat-label">Suspicious Emails</div><div class="stat-value warn" id="stat-emails-suspicious">–</div></div>
+  <div class="stat-card"><div class="stat-label">Legitimate Emails</div><div class="stat-value safe" id="stat-emails-legit">–</div></div>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:22px;">
+  <div class="stat-card"><div class="stat-label">Messages Analyzed</div><div class="stat-value accent" id="stat-messages-total">–</div></div>
+  <div class="stat-card"><div class="stat-label">Phishing Messages</div><div class="stat-value danger" id="stat-messages-phishing">–</div></div>
+  <div class="stat-card"><div class="stat-label">Suspicious Messages</div><div class="stat-value warn" id="stat-messages-suspicious">–</div></div>
+  <div class="stat-card"><div class="stat-label">Legitimate Messages</div><div class="stat-value safe" id="stat-messages-legit">–</div></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "_appshell.html" %}
+{% block title %}Training — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>AI Model / Training</h1>
+  <p>Train and refresh the detection models on the phishing URL dataset.</p>
+</div>
+
+{% if not dataset_exists %}
+<div class="alert alert-danger">
+  No dataset found at <code>data/phishing.csv</code>. Add a real dataset (columns: <code>url,label</code>) or run
+  <code>python src/generate_dataset.py</code> to create a starter dataset, then reload this page.
+</div>
+{% endif %}
+
+{% if not tensorflow_available %}
+<div class="alert alert-warn">
+  TensorFlow is not installed in this environment, so the Artificial Neural Network model will be skipped.
+  Run <code>pip install tensorflow</code> to enable it. Classical ML models are unaffected.
+</div>
+{% endif %}
+
+<div class="grid grid-4" style="margin-bottom:22px;" id="dataset-stats">
+  <div class="stat-card"><div class="stat-label">Dataset Size</div><div class="stat-value accent" id="s-size">–</div></div>
+  <div class="stat-card"><div class="stat-label">Features</div><div class="stat-value accent" id="s-features">–</div></div>
+  <div class="stat-card"><div class="stat-label">Training Samples</div><div class="stat-value accent" id="s-train">–</div></div>
+  <div class="stat-card"><div class="stat-label">Testing Samples</div><div class="stat-value accent" id="s-test">–</div></div>
+</div>
+
+<div class="card" style="margin-bottom:22px;">
+  <div class="card-header"><span class="card-title">Class Distribution</span></div>
+  <div id="class-dist" style="color:var(--text-dim); font-size:14px;">–</div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Train Models</span>
+    <span class="card-sub">Trains 6 ML models{% if tensorflow_available %} + ANN{% endif %} and saves them to /models</span>
+  </div>
+  <p style="color:var(--text-dim); font-size:13.5px; margin-bottom:16px;">
+    Training runs in the background and typically takes anywhere from a few seconds to a couple of minutes
+    depending on dataset size. The scanner remains usable with the previously trained models while a new
+    training run is in progress.
+  </p>
+  <button id="train-btn" class="btn btn-primary btn-lg" {% if not dataset_exists %}disabled{% endif %}>Train Models</button>
+  <div id="train-status" style="margin-top:18px;"></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>window.__MODELS_TRAINED__ = {{ 'true' if models_trained else 'false' }};</script>
+<script src="{{ url_for('static', filename='js/training.js') }}"></script>
+{% endblock %}

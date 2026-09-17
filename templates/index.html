@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}PhishGuard AI — AI-Powered Phishing Detection{% endblock %}
+{% block content %}
+<div class="landing">
+  <div class="landing-nav">
+    <div class="brand"><span class="brand-icon">◈</span><span class="brand-text">PhishGuard <span class="brand-ai">AI</span></span></div>
+    <div style="display:flex; gap:10px;">
+      <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+      <a href="/scanner" class="btn btn-primary">Scan a URL</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-badge">{% if models_trained %}● Models Trained &amp; Ready{% else %}◐ Setup Required — Train Models to Begin{% endif %}</div>
+    <h1>AI-Powered <span>Phishing Detection</span></h1>
+    <p>Analyze suspicious URLs using machine learning and deep learning. Get an instant risk score, confidence level, and explainable breakdown of every prediction.</p>
+    <div class="hero-actions">
+      <a href="/scanner" class="btn btn-primary btn-lg">Analyze a URL →</a>
+      <a href="/models" class="btn btn-outline btn-lg">View Model Performance</a>
+    </div>
+  </div>
+
+  <div class="features-row">
+    <div class="feature-card">
+      <div class="icon">◆</div>
+      <h3>Multi-Model Ensemble</h3>
+      <p>Six classical ML models — Logistic Regression, Decision Tree, Random Forest, KNN, SVM, Gradient Boosting — plus a TensorFlow/Keras neural network, automatically compared to select the best performer.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">◎</div>
+      <h3>Lexical Feature Analysis</h3>
+      <p>31 engineered features extracted purely from the URL string — length, entropy, subdomains, suspicious keywords, IP hosting — with no network requests to the target site.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">✓</div>
+      <h3>Explainable Results</h3>
+      <p>Every prediction ships with a risk score, confidence level, and a plain-language breakdown of exactly which signals drove the verdict.</p>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2 style="font-size:22px; font-weight:700;">How Detection Works</h2>
+    <div class="steps-row">
+      <div class="step-card"><div class="step-num">1</div><h4>Submit URL</h4><p>Paste any URL into the scanner. Nothing is opened or executed.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h4>Extract Features</h4><p>31 lexical &amp; structural features are computed from the string.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h4>Model Inference</h4><p>The best-performing trained model scores the feature vector.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h4>Explainable Verdict</h4><p>Get a label, risk score, confidence, and the reasons behind it.</p></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

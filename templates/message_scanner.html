@@ -1,0 +1,35 @@
+{% extends "_appshell.html" %}
+{% block title %}Message Scanner — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Message Scanner</h1>
+  <p>Paste an SMS or chat message to analyze it for phishing indicators. Your messaging apps, inbox, and contacts are never accessed.</p>
+</div>
+
+{% if not models_trained %}
+<div class="alert alert-warn">
+  No trained message model found. Run <code>python src/message_detection/train_message_model.py</code> from the project root, then reload this page.
+</div>
+{% endif %}
+
+<div class="card" style="margin-bottom:24px;">
+  <div style="display:flex; flex-direction:column; gap:14px;">
+    <div>
+      <label style="font-size:12.5px; color:var(--text-dim); display:block; margin-bottom:6px;">Message Text</label>
+      <textarea id="message-text" class="input textarea" rows="6" placeholder="Paste the SMS or chat message here…" {% if not models_trained %}disabled{% endif %}></textarea>
+    </div>
+    <button id="analyze-message-btn" class="btn btn-primary btn-lg" style="align-self:flex-start;" {% if not models_trained %}disabled{% endif %}>Analyze Message</button>
+  </div>
+</div>
+
+<div id="loading" class="loading-wrap" style="display:none;">
+  <div class="spinner"></div>
+  <div class="loading-text">Analyzing message content…</div>
+</div>
+
+<div id="error-box"></div>
+<div id="result-wrap" style="display:none; margin-top:24px;"></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/message_scanner.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "_appshell.html" %}
+{% block title %}Scan History — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Scan History</h1>
+  <p>All previously analyzed URLs, stored locally in SQLite.</p>
+</div>
+
+<div class="card">
+  <div class="filters-row">
+    <input type="text" id="search-input" class="input" placeholder="Search by URL, subject, or message…">
+    <select id="type-select" class="input">
+      <option value="all">All Types</option>
+      <option value="Website">Website</option>
+      <option value="Email">Email</option>
+      <option value="Message">Message</option>
+    </select>
+    <select id="filter-select" class="input">
+      <option value="all">All Predictions</option>
+      <option value="Phishing">Phishing</option>
+      <option value="Suspicious">Suspicious</option>
+      <option value="Legitimate">Legitimate</option>
+    </select>
+    <select id="sort-select" class="input">
+      <option value="scanned_at-desc">Newest First</option>
+      <option value="scanned_at-asc">Oldest First</option>
+      <option value="risk_score-desc">Highest Risk</option>
+      <option value="risk_score-asc">Lowest Risk</option>
+    </select>
+    <button id="clear-btn" class="btn btn-danger">Clear History</button>
+  </div>
+
+  <table>
+    <thead><tr><th>Type</th><th>URL / Identifier</th><th>Prediction</th><th>Risk Score</th><th>Confidence</th><th>Model</th><th>Date / Time</th></tr></thead>
+    <tbody id="history-body"><tr><td colspan="7" style="color:var(--text-faint);">Loading…</td></tr></tbody>
+  </table>
+  <div id="empty-state" class="empty-state" style="display:none;">No scans found.</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "_appshell.html" %}
+{% block title %}URL Scanner — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>URL Scanner</h1>
+  <p>Enter a website URL to analyze it with the trained detection model.</p>
+</div>
+
+{% if not models_trained %}
+<div class="alert alert-warn">
+  No trained models found. Go to <a href="/training" style="text-decoration:underline;">AI Model / Training</a> and click "Train Models" before scanning.
+</div>
+{% else %}
+<div class="alert alert-info">Active model: <strong>{{ best_model }}</strong></div>
+{% endif %}
+
+<div class="card scanner-hero">
+  <div class="scanner-input-row">
+    <input type="text" id="url-input" class="input" placeholder="Enter website URL (e.g. https://example.com)" {% if not models_trained %}disabled{% endif %}>
+    <button id="analyze-btn" class="btn btn-primary btn-lg" {% if not models_trained %}disabled{% endif %}>Analyze URL</button>
+  </div>
+</div>
+
+<div id="loading" class="loading-wrap" style="display:none;">
+  <div class="spinner"></div>
+  <div class="loading-text">Extracting features and running model inference…</div>
+</div>
+
+<div id="error-box"></div>
+
+<div id="result-wrap" style="display:none; margin-top:24px;"></div>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scanner.js') }}"></script>
+{% endblock %}

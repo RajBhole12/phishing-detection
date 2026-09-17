@@ -1,0 +1,11 @@
+# Optional: only needed for the Artificial Neural Network model.
+# The app works fully without this -- src/deep_learning.py detects if
+# TensorFlow is missing and the training pipeline simply skips the ANN,
+# using only the 6 classical ML models instead.
+#
+# Install separately, AFTER the main requirements are working:
+#   pip install -r requirements-tensorflow.txt
+#
+# If this fails to install on your machine (common on Windows with older
+# Python, 32-bit Python, or Python 3.13+), that's fine -- just skip it.
+tensorflow>=2.15,<3.0

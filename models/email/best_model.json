@@ -1,0 +1,11 @@
+{
+  "best_model": "Logistic Regression",
+  "metric_used": "roc_auc",
+  "dataset_size": 312,
+  "n_train": 249,
+  "n_test": 63,
+  "class_distribution": {
+    "legitimate": 109,
+    "phishing": 203
+  }
+}

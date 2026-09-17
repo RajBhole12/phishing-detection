@@ -1,0 +1,15 @@
+{
+  "best_model": "Logistic Regression",
+  "metric_used": "roc_auc",
+  "trained_at": 1789620531.8817487,
+  "training_duration_sec": 14.93,
+  "dataset_size": 2184,
+  "n_features": 32,
+  "n_train": 1747,
+  "n_test": 437,
+  "class_distribution": {
+    "legitimate": 989,
+    "phishing": 1195
+  },
+  "tensorflow_available": false
+}

@@ -1,0 +1,50 @@
+{% extends "_appshell.html" %}
+{% block title %}Model Analytics — PhishGuard AI{% endblock %}
+{% block page %}
+<div class="page-header">
+  <h1>Model Analytics</h1>
+  <p>Trained-model comparison and evaluation metrics.</p>
+</div>
+
+{% if not models_trained %}
+<div class="alert alert-warn">
+  No trained models found yet. Visit <a href="/training" style="text-decoration:underline;">AI Model / Training</a> to train models.
+</div>
+{% else %}
+
+<div id="best-model-banner" class="alert alert-info"></div>
+
+<div class="card" style="margin-bottom:22px;">
+  <div class="card-header"><span class="card-title">Model Comparison</span></div>
+  <canvas id="chart-model-comparison" height="110"></canvas>
+</div>
+
+<div class="card" style="margin-bottom:22px;">
+  <div class="card-header"><span class="card-title">Detailed Metrics</span></div>
+  <table>
+    <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th><th>ROC-AUC</th></tr></thead>
+    <tbody id="metrics-body"></tbody>
+  </table>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:22px;">
+  <div class="card">
+    <div class="card-header"><span class="card-title">ROC Curves</span></div>
+    <img class="plot" src="/static/images/roc_curves.png?v={{ range(1,99999) | random }}" alt="ROC Curves" onerror="this.style.display='none'">
+  </div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Confusion Matrices</span></div>
+    <img class="plot" src="/static/images/confusion_matrices.png?v={{ range(1,99999) | random }}" alt="Confusion Matrices" onerror="this.style.display='none'">
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><span class="card-title">Feature Importance</span></div>
+  <img class="plot" src="/static/images/feature_importance.png?v={{ range(1,99999) | random }}" alt="Feature Importance" onerror="this.style.display='none'">
+</div>
+
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/models.js') }}"></script>
+{% endblock %}
